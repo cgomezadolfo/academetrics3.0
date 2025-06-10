@@ -1,8 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
 const { hasPermission, canManageRole, ROLE_HIERARCHY } = require('../config/permissions');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../config/database');
 
 // Middleware de autenticación
 exports.authenticate = async (req, res, next) => {

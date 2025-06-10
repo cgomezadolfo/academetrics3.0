@@ -1,6 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
 const { validateRequiredFields, generateValidationMessage } = require('../utils/validation');
-const prisma = new PrismaClient();
+const { prisma } = require('../config/database');
 
 // Crear curso
 exports.createCurso = async (req, res) => {

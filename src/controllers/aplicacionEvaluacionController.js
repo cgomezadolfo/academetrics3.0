@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { prisma } = require('../config/database');
 
 // Crear aplicación de evaluación
 exports.createAplicacion = async (req, res) => {

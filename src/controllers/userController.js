@@ -1,8 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const { validateRequiredFields, validateEmail, validateRUT, generateValidationMessage } = require('../utils/validation');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../config/database');
 
 // Crear usuario
 exports.createUser = async (req, res) => {

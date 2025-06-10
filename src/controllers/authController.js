@@ -1,9 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { getRolePermissions } = require('../config/permissions');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../config/database');
 
 // Login de usuario
 exports.login = async (req, res) => {
