@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  passwordHash    String
+  nombre          String
+  apellidoPaterno String
+  apellidoMaterno String
+  rut             String   @unique
+  activo          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  rolId           Int
+  colegioId       Int
+
+  rol          Rol          @relation(fields: [rolId], references: [id])
+  colegio      Colegio      @relation(fields: [colegioId], references: [id])
+  evaluaciones Evaluacion[]
+  estudiante   Estudiante?
+}
+
+model Rol {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique
+  descripcion String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  usuarios Usuario[]
+}
+
+model Colegio {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  direccion String
+  telefono  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuarios     Usuario[]
+  cursos       Curso[]
+  asignaturas  Asignatura[]
+  evaluaciones Evaluacion[]
+}
+
+model Curso {
+  id        Int      @id @default(autoincrement())
+  nivel     String
+  letra     String
+  jornada   String
+  colegioId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  colegio                Colegio                @relation(fields: [colegioId], references: [id])
+  estudiantes            Estudiante[]
+  asignaturas            Asignatura[]
+  aplicacionesEvaluacion AplicacionEvaluacion[]
+}
+
+model Asignatura {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  cursoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  curso        Curso        @relation(fields: [cursoId], references: [id])
+  evaluaciones Evaluacion[]
+  Colegio      Colegio?     @relation(fields: [colegioId], references: [id])
+  colegioId    Int?
+}
+
+model Estudiante {
+  id        Int      @id @default(autoincrement())
+  usuarioId Int      @unique
+  cursoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  usuario        Usuario        @relation(fields: [usuarioId], references: [id])
+  curso          Curso          @relation(fields: [cursoId], references: [id])
+  calificaciones Calificacion[]
+}
+
+model Evaluacion {
+  id                    Int      @id @default(autoincrement())
+  titulo                String
+  descripcion           String?
+  puntajeTotal          Float
+  profesorId            Int
+  asignaturaId          Int
+  colegioId             Int
+  estado                String
+  mostrarCalificaciones Boolean  @default(true)
+  notaMinima            Float
+  notaMaxima            Float
+  porcentajeAprobacion  Float
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  profesor     Usuario                @relation(fields: [profesorId], references: [id])
+  asignatura   Asignatura             @relation(fields: [asignaturaId], references: [id])
+  colegio      Colegio                @relation(fields: [colegioId], references: [id])
+  preguntas    Pregunta[]
+  aplicaciones AplicacionEvaluacion[]
+}
+
+model Pregunta {
+  id            Int      @id @default(autoincrement())
+  evaluacionId  Int
+  tipoPregunta  String
+  enunciado     String
+  rutaImagen    String?
+  puntajeMaximo Float
+  orden         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  evaluacion   Evaluacion            @relation(fields: [evaluacionId], references: [id])
+  alternativas Alternativa[]
+  respuestas   RespuestaEstudiante[]
+}
+
+model Alternativa {
+  id               Int      @id @default(autoincrement())
+  preguntaId       Int
+  textoAlternativa String
+  esCorrecta       Boolean
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  pregunta             Pregunta              @relation(fields: [preguntaId], references: [id])
+  respuestasEstudiante RespuestaEstudiante[] @relation("AlternativaSeleccionada")
+}
+
+model AplicacionEvaluacion {
+  id              Int      @id @default(autoincrement())
+  evaluacionId    Int
+  cursoId         Int
+  fechaAplicacion DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  evaluacion     Evaluacion     @relation(fields: [evaluacionId], references: [id])
+  curso          Curso          @relation(fields: [cursoId], references: [id])
+  calificaciones Calificacion[]
+}
+
+model Calificacion {
+  id                     Int      @id @default(autoincrement())
+  aplicacionEvaluacionId Int
+  estudianteId           Int
+  puntajeObtenido        Float
+  calificacionFinal      Float
+  observaciones          String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  aplicacionEvaluacion AplicacionEvaluacion  @relation(fields: [aplicacionEvaluacionId], references: [id])
+  estudiante           Estudiante            @relation(fields: [estudianteId], references: [id])
+  respuestas           RespuestaEstudiante[]
+}
+
+model RespuestaEstudiante {
+  id                        Int      @id @default(autoincrement())
+  calificacionId            Int
+  preguntaId                Int
+  respuestaTexto            String?
+  alternativaSeleccionadaId Int?
+  puntajeObtenidoPregunta   Float
+  esCorrecta                Boolean
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  calificacion            Calificacion @relation(fields: [calificacionId], references: [id])
+  pregunta                Pregunta     @relation(fields: [preguntaId], references: [id])
+  alternativaSeleccionada Alternativa? @relation("AlternativaSeleccionada", fields: [alternativaSeleccionadaId], references: [id])
+}

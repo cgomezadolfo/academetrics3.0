@@ -1,0 +1,42 @@
+{
+  "name": "edumetrics",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon src/app.js",
+    "dev-debug": "nodemon src/app-debug.js",
+    "dev-minimal": "nodemon src/app-minimal.js",
+    "test-minimal": "nodemon src/minimal-app.js",
+    "test-app": "nodemon src/app-test.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node src/utils/seed.js",
+    "db:migrate": "npx prisma migrate dev",
+    "db:generate": "npx prisma generate",
+    "db:studio": "npx prisma studio",
+    "db:reset": "npx prisma migrate reset && npm run seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cgomezadolfo/edumetrics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cgomezadolfo/edumetrics/issues"
+  },
+  "homepage": "https://github.com/cgomezadolfo/edumetrics#readme",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prisma": "^6.8.2"
+  }
+}

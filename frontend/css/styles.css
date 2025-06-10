@@ -1,0 +1,178 @@
+/* EduMetrics Custom Styles */
+
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #858796;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-color: #f8f9fc;
+    --dark-color: #5a5c69;
+}
+
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fc;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(180deg, var(--primary-color) 10%, #224abe 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.bg-login-image {
+    background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(78, 115, 223, 0.8)), 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234e73df;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%23224abe;stop-opacity:0.3" /></linearGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23grad)"/><circle cx="800" cy="300" r="150" fill="url(%23grad)"/><circle cx="300" cy="700" r="120" fill="url(%23grad)"/><circle cx="700" cy="800" r="80" fill="url(%23grad)"/></svg>');
+    background-size: cover;
+    background-position: center;
+}
+
+.card {
+    border-radius: 1rem;
+    border: none;
+}
+
+.card-body {
+    border-radius: 1rem;
+}
+
+.form-control-user {
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+    border: 1px solid #d1d3e2;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-user:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.btn-user {
+    border-radius: 10rem;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #375a7f;
+    border-color: #375a7f;
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.text-gray-900 {
+    color: #5a5c69 !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* Loading Animation */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Hover effects for test buttons */
+.btn-outline-info:hover,
+.btn-outline-success:hover,
+.btn-outline-warning:hover,
+.btn-outline-secondary:hover {
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bg-login-image {
+        display: none !important;
+    }
+    
+    .card {
+        margin: 1rem;
+    }
+    
+    .form-control-user {
+        padding: 1rem 0.75rem;
+    }
+}
+
+/* Custom input group styling */
+.input-group .btn {
+    border-radius: 0 10rem 10rem 0;
+}
+
+.input-group .form-control {
+    border-radius: 10rem 0 0 10rem;
+}
+
+/* Animation for page load */
+.card {
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Dashboard Styles (para usar después) */
+.sidebar {
+    background: linear-gradient(180deg, var(--primary-color) 10%, #224abe 100%);
+    min-height: 100vh;
+}
+
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 0.25rem 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar .nav-link i {
+    margin-right: 0.5rem;
+    width: 1.25rem;
+}
+
+/* Cards de estadísticas */
+.card-stats {
+    transition: all 0.3s ease;
+}
+
+.card-stats:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.text-primary { color: var(--primary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
